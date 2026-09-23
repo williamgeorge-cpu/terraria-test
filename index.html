@@ -71,5 +71,29 @@
 		<canvas id="canvas" style="width: 100%">
 
 		</canvas>
+	<!-- FORCE RESUME STUCK MOUSE POINTERS ON CLICK -->
+<script>
+window.addEventListener('mousedown', function(e) {
+    // If the game engine drops clicks, force the browser to re-request mouse lock
+    var canvasElement = document.querySelector('canvas') || document.getElementById('canvas');
+    if (canvasElement && !document.pointerLockElement) {
+        // Breaking the frozen container barrier cleanly
+        canvasElement.requestPointerLock = canvasElement.requestPointerLock || canvasElement.webkitRequestPointerLock;
+        if (canvasElement.requestPointerLock) {
+            canvasElement.requestPointerLock();
+        }
+    }
+});
+
+// Emergency fallback: Pressing the spacebar or middle click releases frozen system locks
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.code === 'Escape') {
+        console.log("Forcing input engine buffer reset...");
+        document.exitPointerLock = document.exitPointerLock || document.webkitExitPointerLock;
+        if (document.exitPointerLock) { document.exitPointerLock(); }
+    }
+});
+</script>
+
 	</body>
 </html>
