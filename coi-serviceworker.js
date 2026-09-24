@@ -1,3 +1,49 @@
+// ========================================================
+// 1. PLACE OUR CACHING CODE AT THE VERY TOP
+// ========================================================
+const CACHE_NAME = 'porthub-terraria-v1';
+const ASSETS_TO_CACHE = [
+  './',
+  './index.html',
+  './main.js',
+  './main.wasm',
+  './mast.bin',
+  './app.ico',
+  './atlas1.webp', './atlas1.txt',
+  './atlas2.webp', './atlas2.txt',
+  './atlas3.webp', './atlas3.txt',
+  './atlas4.webp', './atlas4.txt',
+  './atlas5.webp', './atlas5.txt',
+  './atlas6.webp', './atlas6.txt',
+  './atlas7.webp', './atlas7.txt',
+  './atlas8.webp', './atlas8.txt',
+  './atlas9.webp', './atlas9.txt'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('Locking Terraria graphics sheets and text registries into hardware storage...');
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
+
+// ========================================================
+// 2. THE ORIGINAL COI-SERVICEWORKER CODE STARTS RIGHT HERE
+// ========================================================
+// (Leave all of the original text, functions, and variables 
+// that were already in the file completely untouched down here)
+
+
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
