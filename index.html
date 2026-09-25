@@ -2,14 +2,6 @@
 <html lang="en">
 	<head>
 		<script src="./coi-serviceworker.js"></script>
-		<script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./cache-worker.js')
-                    .then(reg => console.log('Offline storage driver active!'))
-                    .catch(err => console.log('Storage driver failed:', err));
-            });
-        }
     </script>
 		<meta charset="UTF-8" />
 		<link rel="icon" href="./app.ico" />
